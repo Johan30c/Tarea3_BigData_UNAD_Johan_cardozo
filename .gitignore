@@ -1,0 +1,8 @@
+.local/
+.ivy2/
+__pycache__/
+*.pyc
+*.tgz
+*.zip
+spark*
+kafka*
