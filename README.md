@@ -1,11 +1,49 @@
-# Procesamiento de datos en Batch y Streaming con Spark y Kafka
+# Tarea 3 – Procesamiento de Datos con Apache Spark (Batch + Streaming con Kafka)
 
-Este proyecto implementa un sistema de procesamiento de datos en batch y streaming utilizando Apache Spark y Apache Kafka.
+## Problema
 
-El procesamiento en batch se realiza mediante el archivo `tarea3.py`, el cual lee datos desde un archivo CSV y realiza operaciones de análisis y transformación de los datos.
+Analizar un conjunto de datos histórico de la Tasa de Cambio Representativa del Mercado (TRM) en Colombia para obtener indicadores financieros y simular un flujo de datos en tiempo real utilizando Apache Kafka y Apache Spark Streaming.
 
-El procesamiento en streaming se realiza utilizando Kafka como sistema de mensajería y Spark Streaming para consumir y procesar los datos en tiempo real.
+## Dataset (Colombia)
 
+Tasa de Cambio Representativa del Mercado Histórico (TRM).
+
+Fuente:
+
+https://www.datos.gov.co/Econom-a-y-Finanzas/Tasa-de-Cambio-Representativa-del-Mercado-Historic/mcec-87by
+
+Este dataset contiene:
+
+- Fecha
+- Valor del dólar en pesos colombianos
+- Datos históricos diarios
+
+## Descarga del dataset
+
+Si no se incluye el CSV en el repositorio, se puede descargar así:
+
+curl -L -o trm_colombia.csv "https://www.datos.gov.co/resource/9mn6-ky8i.csv"
+
+## Procesamiento en Batch
+
+El procesamiento en batch se realiza con el archivo:
+
+tarea3.py
+
+Este script:
+
+- Lee el archivo CSV
+- Procesa los datos
+- Calcula estadísticas de la TRM
+
+## Procesamiento en Streaming
+
+El procesamiento en streaming se realiza con:
+
+kafka_producer.py  
+spark_streaming_consumer.py  
+
+Kafka envía los datos y Spark Streaming los procesa en tiempo real.
 
 ## Requisitos
 
@@ -13,31 +51,30 @@ El procesamiento en streaming se realiza utilizando Kafka como sistema de mensaj
 - Apache Spark
 - Apache Kafka
 - Java
-- Sistema operativo Linux / Ubuntu
-
+- Ubuntu / Linux
 
 ## Instrucciones de ejecución
 
-1. Iniciar Zookeeper:
+1. Iniciar Zookeeper
 
 zookeeper-server-start.sh config/zookeeper.properties
 
-2. Iniciar Kafka:
+2. Iniciar Kafka
 
 kafka-server-start.sh config/server.properties
 
-3. Crear el tópico:
+3. Crear el tópico
 
-kafka-topics.sh --create --topic datos --bootstrap-server localhost:9092
+kafka-topics.sh --create --topic trm --bootstrap-server localhost:9092
 
-4. Ejecutar el productor:
+4. Ejecutar el productor
 
 python kafka_producer.py
 
-5. Ejecutar el consumidor en streaming:
+5. Ejecutar el consumidor
 
 spark-submit spark_streaming_consumer.py
 
-6. Ejecutar el procesamiento batch:
+6. Ejecutar el procesamiento batch
 
 python tarea3.py
