@@ -1,23 +1,21 @@
-import time
 import json
+import time
 import random
+from datetime import datetime
 from kafka import KafkaProducer
 
-def generate_sensor_data():
-    return {
-        "sensor_id": random.randint(1, 10),
-        "temperature": round(random.uniform(20, 30), 2),
-        "humidity": round(random.uniform(30, 70), 2),
-        "timestamp": int(time.time())
-    }
-
 producer = KafkaProducer(
-    bootstrap_servers=['localhost:9092'],
-    value_serializer=lambda x: json.dumps(x).encode('utf-8')
+    bootstrap_servers="localhost:9092",
+    value_serializer=lambda v: json.dumps(v).encode("utf-8")
 )
 
 while True:
-    sensor_data = generate_sensor_data()
-    producer.send('sensor_data', value=sensor_data)
-    print(f"Sent: {sensor_data}")
-    time.sleep(1)
+    data = {
+        "trm": random.uniform(3800, 4200),
+        "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    }
+
+    producer.send("trm_data", data)
+    print("Dato enviado:", data)
+
+    time.sleep(2)
